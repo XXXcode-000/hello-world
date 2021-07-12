@@ -1,0 +1,42 @@
+可执行脚本script 一种可执行的程序
+不需要进行编译，可以直接执行
+Linux下常见的三种脚本程序
+	-shell 脚本 *.sh
+	-perl 脚本 *.pl
+	-python 脚本 *.py
+
+脚本文件 本质上是文本文件，具有可执行权限
+运行脚本文件 
+	比如 ： ./hello.sh   ./hello.py
+脚本程序都是由解释器来执行的
+	shell脚本解释器： /bin/sh
+	perl脚本解释器： /bin/perl
+	python脚本解释器： /bin/python3
+执行一个脚本时，以下两种方式等效
+	./hello.py
+	/bin/python3 hello.py
+	/bin/sh hello.sh
+	
+shell脚本 ，按shell的语法写出来的脚本
+是linux自带的语言脚本，相当于windows下的dos批处理脚本
+创建一个shell脚本：
+	1.编辑一个文本文件，保存为hello.sh
+	#!/bin/sh
+	echo "hello world"
+	2.添加可执行权限(默认无权限)
+	chmod +x hello.sh
+	3.执行程序
+	./hello.sh
+*1.shell脚本第一行必须声明解释器
+	#!/bin/sh
+*2.必须有x权限，才能够执行
+*3.执行程序时，必须加上路径
+	./hello.sh
+	/home/shaofa/hello.sh
+
+python脚本
+	1.编辑一个文本文件，保存为hello.py
+	2.添加可执行权限
+		chmod +x hello.py
+	3.执行程序
+		./hello.py

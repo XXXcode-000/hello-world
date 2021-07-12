@@ -1,0 +1,13 @@
+//gcc gdb
+
+gcc -c a.c 编译c语言文件，但不进行连接，生成文件a.o
+gcc a.c -o a 编译c语言文件，并输出到文件a中
+gcc -g test.c -o main 编译生成执行文件，让他可以被gdb调试
+
+gdb命令 
+run /r
+start /st
+next /n
+step 
+break +行号 添加断点
+

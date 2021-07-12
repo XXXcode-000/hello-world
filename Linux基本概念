@@ -1,0 +1,31 @@
+1.Linux目录
+	Linux 目录结构为树状目录
+	顶级目录为根目录/
+	不同的硬盘可挂载在不同的目录下
+	绝对路径：以根目录为基准，例如：/usr/bin/
+	相对路径：由当前所在目录为基准,例如：../usr/bin(详情看第四点)
+2.文件系统
+	一切皆为文件
+	支持不同文件系统
+	常用文件系统有EXT3，EXT4和HPFS
+	Linux中文件后缀名没有任何意义
+3.Linux特性
+	开放性（开源）->安全一点
+	多用户
+	多任务
+	良好的用户界面
+	设备独立性
+	丰富的网络功能
+	可靠的系统安全 ***
+	良好的移植性
+4.常用工具
+	Vim,Emacs	screen-oriented text editor
+	Tar,Gunzip	compression tool
+	Apt-get,Yum	low level package manager
+	Git,SVN		代码管理工具
+	Sed,Awk		stream editor
+	Gcc,G++		一种c语言的编辑器
+	Gdb		C program debugger (调试比较麻烦)
+	Grep		查找文件时用到
+	Ssh		secure networking tool
+	

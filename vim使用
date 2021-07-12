@@ -1,0 +1,18 @@
+                                                   
+~                              VIM - Vi IMproved                                
+~                                                                               
+~                                版本 8.1.2269                                  
+~                           维护人 Bram Moolenaar 等                            
+~                      修改者 team+vim@tracker.debian.org                       
+~                       Vim 是可自由分发的开放源代码软件                        
+~                                                                               
+~                            成为 Vim 的注册用户！                              
+~                输入  :help register<Enter>   查看说明                         
+~                                                                               
+~                输入  :q<Enter>               退出                             
+~                输入  :help<Enter>  或  <F1>  查看在线帮助                     
+~                输入  :help version8<Enter>   查看版本信息                     
+~                                                                               
+~                                                             
+esc 退出编辑模式
+：wq保存并推出

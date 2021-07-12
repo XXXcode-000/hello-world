@@ -1,0 +1,209 @@
+linux 常用命令
+---------------------
+1.ls
+	ls (list) 显示当前目录下的所有路径
+	可添加参数 ls -l 表示用详细模式查看 会把每个文件的属性都展示出来
+	ls -a 查看全部文件，这样可以看到隐藏文件
+	（在linux中，以.开头的文件为隐藏文件）
+	按tab键可自动补全
+2.pwd
+	pwd (print working directory)显示当前工作目录
+3.cd
+	cd (change directory) 切换目录
+	cd 切换到用户主目录
+	cd +要转换的目录 
+4.几个特殊的目录
+	~代表当前用户的主目录
+	.代表当前目录
+	..代表上一级目录
+	
+	cd ~ 切换到主目录
+	cd ~/example 切换到主目录下的example目录
+	cd ../www 切换到上级目录 再到www子目录
+	ls也有相同用法
+5.目录操作
+	mkdir (make directory)创建目录
+	mkdir abc
+	mkdir -p abc/123/test
+	使用-p 参数，可以将路径的层次目录全部创建
+	
+	rmdir (remove directory)删除空目录
+	rmdir abc
+	如果目录非空，则删除失败(不常用)
+	
+	rm (remove)
+	rm -rf abc 删除abc目录，和子项一起删除
+	其中 r表示recursive,f 表示force
+	
+	cp (copy) 复制文件或者目录
+	cp -rf example example2
+	
+	mv (move) 移动文件或目录（重命名）
+	move hello helloworld
+	
+	对于文件来说，rm/cp/mv这三个命令同样适用
+	
+6.归档(其实就是备份的概念)
+	tar (tape archive)档案打包
+	创建档案包 tar -cvf example.tar example
+	c, 表示create 创建档案
+	v, 表示verbose 显示详情
+	f, 表示file
+	也可以将多个目录打包 tar -cvf xxx.tar file1 file2 file3
+	
+	还原档案包
+	tar -xvf example.tar
+	tar -xvf example.tar -C outdir
+	其中， -C参数指定目标目录，默认解到当前目录下
+	
+7.归档并压缩
+	先前的tar格式并没有压缩，体积较大
+	并档并压缩 tar -czvf example.tar.gz example
+	解压缩 tar -xzvf example.tar.gz
+	tar -xzvf example.tar.gz -C outdir
+
+8.软链接
+	软链接，即windows下的快捷模式
+	使用ln命令(link)来创建软链接
+	ln -s source link
+	-s 表示soft软链接（默认为硬）
+	比如 ln -s example example2
+	软链接的特点：
+	1.删除软链接，对原文件无影响
+	2.删除原文件，则软链接失效
+	以ls -l看文件详情时，可以看到目标文件
+	比如， ls -l /
+	可以发现，/bin实际上指向的是/usr/bin目录
+
+9.用户的管理操作
+	sudo, 表示以管理员身份执行
+	只有特殊的用户才能执行sudo
+	添加用户 sudo useradd -m test1（普通用户没有权限执行，所以要在命令前加上sudo）
+	其中-m参数表示在/home下添加用户目录
+	
+	修改用户密码 sudo passwd test1(用户名)
+	
+	删除用户 sudo userdel test1
+
+10.超级用户
+	1.首次使用时，需要给root设置密码(ubuntu的root用户密码每次重启都会清空)
+		sudo passwd root
+	2.切换到root用户
+		su root
+		其中，su表示switch user
+	3.退出
+		exit
+	
+	在root用户下，执行管理操作，不用加sudo
+	su root 仅仅在对当前对话终端口有效
+
+11.用户和组(root)
+	linux下可创建多个用户，可以用组来进行管理用户
+	创建组 groupadd groupname(组名)
+	创建用户 useradd -m -g groupname username
+	-g表示在添加用户，同时添加用户到xxx组中
+	修改现有用户到新的组
+	usermod -g groupname username(已有的)
+	其中 usermod表示修改用户信息
+	查看用户和组 cat /etc/group
+	查看用户列表 cat /etc/passwd
+	
+12.以root登陆桌面
+	默认的，ubuntu不允许以root登陆桌面
+	1.设置root密码
+		sudo passwd root
+	2.在终端里切换到root用户
+		su root 
+	3.gedit /etc/pam.d/gdm-autologin
+		这里打开了一个配置文件
+		在这一行前面添加一个# 把这行给注释掉
+		#auth required pam_succeed_if_so user != root quiet_success
+		关闭并保存
+	4.gedit /etc/pam.d/gdm-passwd
+		在这一行前面添加一个# 把这行给注释掉
+		#auth required pam_succeed_if_so user != root quiet_success
+		关闭并保存
+	5. 重启 点开未列出 手动输入用户root和密码
+
+13.文件的权限
+	可用ls -l 查看文件的权限 在文件信息的开头10个字母中
+	第一个字母代表路径的类型 d 目录 l 链接 - 文件 
+	b 可供存储的接口设备 c 串行端口设备 比如键盘
+	接下来的九个字符表示权限
+	权限分为三部分：自己 | 同组 | 别人
+	r 可读 w可写 x 可执行
+
+	如何修改文件的权限？
+	chmod change file mode 修改文件的访问权限
+	比如，一个文件simple.txt，想让别人也能修改
+	chmod o+w simple.txt
+	o，表示other 别人 a，表示all 所有人 u，表示自己
+
+	+w， 表示增加write权限  -w，  表示减去write权限 （同理还有r和x）
+	
+	*只有文件的属主或者root可以修改文件权限
+	*省略前面的auo，默认是修改自己和本组的权限
+
+14.文件的属主
+	chown change owner 修改文件的属主
+	一般来说，每个用户只操作自己的用户目录，所以chown命令并不常用
+	示例： 在/opt目录下建立一个文件夹software，将software目录分配给用户fish
+		su root
+		mkdir /opt/software
+		chown -R fish /opt/software
+		ls -ld /opt/software
+		exit
+
+15.环境变量
+	定义环境变量export OUTDIR=/opt
+	显示环境变量echo ${OUTDIR}
+	查看所有环境变量 printenv
+	环境变量可以在终端中使用，可以在shell脚本中使用
+	在命令行中定义的环境变量，只对当前shell终端有效
+	当关闭终端后，重启后就消失了，如何让一个环境变量不消失？
+	添加用户环境变量：
+		1.用文本编辑器打开～/.profile  
+			gedit ~/.profile
+		2.添加
+			export JAVA_HOME=/opt/jdk1.8
+		保存并关闭
+		3.注销，重新登录后生效
+			echo $JAVA_HOME	
+	系统环境变量：
+		定义在/etc/profile中
+		此中的环境变量对 所有用户 有效
+		以root身份执行
+		gedit /etc/profile 
+		但是，一般不直接修改/etc/profile
+		而是在/etc/profile.d/创建一个自定义的脚本	
+	*******
+	PATH环境变量：
+		path，最常见的环境变量，用于描述可执行程序的搜索路径
+		echo $PATH
+		多个路径之间以冒号分隔
+		usr/local/bin:usr/local/sbin:/usr/bin:/usr/sbin
+	如何修改path环境变量：
+		1.编辑/etc/profile.d/myprofile.sh
+		设定path环境变量
+		export PATH=$PATH:/opt/tomcat/bin
+		2.注销并重启
+		
+16.更多命令（小学期上课笔记）
+	less，more :display file contents
+	man :display online manual
+	mount :mount file system
+	unmount :unmount file system
+	df :show disk space usage
+	ps :show current processes 查看当前的进程
+		-f 可看到更详细的信息
+		ps -ef | grep "a.out" 查找a.out程序的进程
+	shutdown: reboot or turn off machine
+	grep :show lines matching pattern in file
+	kill :kill a process with its pid
+	
+	ls --help 可查看ls相关的命令手册
+	touch a.txt 可创建一个文件
+	echo "hello world " > a.txt 向a.txt 写入这条信息
+	echo "hello again" >> a.txt 在后面追加这条信息
+	在终端中写程序 vim a.c
+	
